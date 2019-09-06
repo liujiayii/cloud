@@ -1,4 +1,4 @@
-import { queryCurrent, query as queryUsers } from '@/services/user';
+import { query as queryUsers } from '@/services/user/user';
 
 const UserModel = {
   namespace: 'user',
@@ -14,8 +14,8 @@ const UserModel = {
       });
     },
 
-    *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
+    *fetchCurrent(_, { _, put }) {
+      const response = JSON.parse(window.sessionStorage.getItem('userInfo'));
       yield put({
         type: 'saveCurrentUser',
         payload: response,

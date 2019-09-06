@@ -10,7 +10,7 @@ export default {
   menu: {
     locale: true,
   },
-  title: 'Ant Design Plus',
+  title: '云小讴技术部出品',
   pwa: false,
   iconfontUrl: '',
 };

@@ -111,8 +111,95 @@ export default {
             {
               path: '/welcome',
               name: 'welcome',
-              icon: 'smile',
+              icon: 'windows',
               component: './Welcome',
+            },
+            {
+              path: '/brand',
+              name: 'brand',
+              icon: 'apple',
+              routes: [
+                {
+                  path: '/brand/brand-list',
+                  name: 'brand-list',
+                  component: './brand/brand-list',
+                },
+              ],
+            },
+            {
+              path: '/company',
+              name: 'company',
+              icon: 'github',
+              routes: [
+                {
+                  path: '/company/news',
+                  name: 'news',
+                  component: './company/news',
+                },
+              ],
+            },
+            {
+              path: '/come',
+              name: 'come',
+              icon: 'google',
+              routes: [
+                {
+                  path: '/come/introduce',
+                  name: 'introduce',
+                  component: './come/introduce',
+                },
+                {
+                  path: '/come/beauty',
+                  name: 'beauty',
+                  component: './come/beauty',
+                },
+              ],
+            },
+            {
+              path: '/contact',
+              name: 'contact',
+              icon: 'twitter',
+              routes: [
+                {
+                  path: '/contact/join',
+                  name: 'join',
+                  component: './contact/join',
+                },
+                {
+                  path: '/contact/recruit',
+                  name: 'recruit',
+                  component: './contact/recruit',
+                },
+              ],
+            },
+            {
+              path: '/clouds',
+              name: 'clouds',
+              icon: 'facebook',
+              routes: [
+                {
+                  path: '/clouds/mall',
+                  name: 'mall',
+                  component: './clouds/mall',
+                },
+                {
+                  path: '/clouds/merchant',
+                  name: 'merchant',
+                  component: './clouds/merchant',
+                },
+              ],
+            },
+            {
+              path: '/account',
+              name: 'account',
+              icon: 'user',
+              routes: [
+                {
+                  path: '/account/settings',
+                  name: 'settings',
+                  component: './user/settings',
+                },
+              ],
             },
             {
               component: './404',
@@ -244,13 +331,11 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
-  /*
   proxy: {
-    '/server/api/': {
-      target: 'https://preview.pro.ant.design/',
+    '/api/': {
+      target: 'http://192.168.1.119:8080/',
       changeOrigin: true,
-      pathRewrite: { '^/server': '' },
+      pathRewrite: { '^/api': '' },
     },
   },
-  */
 };

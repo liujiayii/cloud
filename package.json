@@ -9,8 +9,6 @@
     "deploy": "cross-env ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION=site npm run site && npm run gh-pages",
     "fetch:blocks": "pro fetch-blocks",
     "format-imports": "import-sort --write '**/*.{js,jsx,ts,tsx}'",
-    "gh-pages": "cp CNAME ./dist/ && gh-pages -d dist",
-    "i18n-remove": "pro i18n-remove --locale=zh-CN --write",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
@@ -26,9 +24,7 @@
     "test:component": "umi test ./src/components"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
-    }
+    "hooks": {}
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
@@ -46,8 +42,7 @@
   ],
   "dependencies": {
     "@ant-design/pro-layout": "^4.5.14",
-    "@antv/data-set": "^0.10.2",
-    "antd": "^3.22.2",
+    "antd": "^3.23.1",
     "classnames": "^2.2.6",
     "dva": "^2.4.1",
     "lodash": "^4.17.15",
@@ -60,7 +55,7 @@
     "react-document-title": "^2.0.3",
     "react-dom": "^16.9.0",
     "redux": "^4.0.4",
-    "umi": "^2.9.0",
+    "umi": "^2.9.3",
     "umi-plugin-pro-block": "^1.3.4",
     "umi-plugin-react": "^1.9.19",
     "umi-request": "^1.2.4"
@@ -85,7 +80,6 @@
     "enzyme": "^3.10.0",
     "eslint": "^5.16.0",
     "express": "^4.17.1",
-    "gh-pages": "^2.1.1",
     "husky": "^3.0.5",
     "import-sort-cli": "^6.0.0",
     "import-sort-parser-babylon": "^6.0.0",
