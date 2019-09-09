@@ -2,7 +2,6 @@ import defaultSettings from './defaultSettings'; // https://umijs.org/config/
 
 import slash from 'slash2';
 import webpackPlugin from './plugin.config';
-import { blue, red, gold } from '@ant-design/colors';
 
 const { pwa, primaryColor } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
@@ -72,6 +71,8 @@ if (isAntDesignProPreview) {
 }
 
 export default {
+  publicPath: '/console/',
+  history: 'hash',
   plugins,
   block: {
     // 国内用户可以使用码云
@@ -333,7 +334,7 @@ export default {
   chainWebpack: webpackPlugin,
   proxy: {
     '/api/': {
-      target: 'http://192.168.1.119:8080/',
+      target: 'http://192.168.1.101:8082/',
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },

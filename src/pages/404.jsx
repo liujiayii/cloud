@@ -1,6 +1,6 @@
-import { Button, Result } from 'antd'
-import React from 'react'
-import router from 'umi/router' // 这里应该使用 antd 的 404 result 组件，
+import { Button, Result } from 'antd';
+import React from 'react';
+import router from 'umi/router'; // 这里应该使用 antd 的 404 result 组件，
 // 但是还没发布，先来个简单的。
 
 const NoFoundPage = () => (
@@ -14,6 +14,6 @@ const NoFoundPage = () => (
       </Button>
     }
   />
-)
+);
 
-export default NoFoundPage
+export default NoFoundPage;

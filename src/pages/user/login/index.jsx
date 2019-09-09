@@ -27,13 +27,11 @@ class Login extends Component {
   };
 
   handleSubmit = (err, values) => {
-    const { type } = this.state;
-
     if (!err) {
       const { dispatch } = this.props;
       dispatch({
         type: 'login/login',
-        payload: { ...values, type },
+        payload: { ...values },
       });
     }
   };
@@ -112,7 +110,7 @@ class Login extends Component {
               name="username"
               placeholder={`${formatMessage({
                 id: 'user-login.login.userName',
-              })}: admin or user`}
+              })}`}
               rules={[
                 {
                   required: true,
@@ -126,7 +124,7 @@ class Login extends Component {
               name="password"
               placeholder={`${formatMessage({
                 id: 'user-login.login.password',
-              })}: ant.design`}
+              })}`}
               rules={[
                 {
                   required: true,
@@ -145,6 +143,7 @@ class Login extends Component {
             />
           </Tab>
           <Tab
+            disabled
             key="mobile"
             tab={formatMessage({
               id: 'user-login.login.tab-login-mobile',
@@ -202,15 +201,10 @@ class Login extends Component {
             />
           </Tab>
           <div>
-            <Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>
+            <Checkbox disabled checked={autoLogin} onChange={this.changeAutoLogin}>
               <FormattedMessage id="user-login.login.remember-me" />
             </Checkbox>
-            <a
-              style={{
-                float: 'right',
-              }}
-              href=""
-            >
+            <a disabled style={{ float: 'right' }} href="">
               <FormattedMessage id="user-login.login.forgot-password" />
             </a>
           </div>
@@ -222,7 +216,7 @@ class Login extends Component {
             <Icon type="alipay-circle" className={styles.icon} theme="outlined" />
             <Icon type="taobao-circle" className={styles.icon} theme="outlined" />
             <Icon type="weibo-circle" className={styles.icon} theme="outlined" />
-            <Link className={styles.register} to="/user/register">
+            <Link disabled className={styles.register} to="/user/register">
               <FormattedMessage id="user-login.login.signup" />
             </Link>
           </div>

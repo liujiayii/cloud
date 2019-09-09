@@ -3,6 +3,11 @@ import request from '@/utils/request';
 export async function fakeAccountLogin(data) {
   return request('/login/login', { data });
 }
+
+export async function fakeAccountLogout() {
+  return request('/login/logout');
+}
+
 export async function handleUpdatePassword(data) {
   return request('/login/updatePassword', { data });
 }

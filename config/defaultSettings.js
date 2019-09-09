@@ -10,7 +10,7 @@ export default {
   menu: {
     locale: true,
   },
-  title: '云小讴技术部出品',
+  title: '云小讴',
   pwa: false,
   iconfontUrl: '',
 };

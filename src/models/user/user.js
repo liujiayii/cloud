@@ -14,7 +14,7 @@ const UserModel = {
       });
     },
 
-    *fetchCurrent(_, { _, put }) {
+    *fetchCurrent(_, { put }) {
       const response = JSON.parse(window.sessionStorage.getItem('userInfo'));
       yield put({
         type: 'saveCurrentUser',

@@ -1,16 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Card,
-  Table,
-  Form,
-  Row,
-  Col,
-  Input,
-  Drawer,
-  Modal,
-  Typography,
-} from 'antd';
+import { Button, Card, Table, Form, Row, Col, Input, Drawer, Modal, Typography } from 'antd';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import moment from 'moment';

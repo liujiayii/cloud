@@ -29,7 +29,7 @@ export default {
         yield put({ type: 'changeTableLoading', payload: false });
       }
     },
-    *showDrawerAction(_, { _, put }) {
+    *showDrawerAction(_, { put }) {
       yield put({ type: 'changeShowDrawerStatus' });
     },
     *handleUpdate({ payload, pagination }, { call, put }) {

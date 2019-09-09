@@ -4,6 +4,7 @@
  * https://github.com/ant-design/ant-design-pro-layout
  */
 import ProLayout from '@ant-design/pro-layout';
+import { Layout } from 'antd';
 import React, { useEffect } from 'react';
 import Link from 'umi/link';
 import { connect } from 'dva';
@@ -24,7 +25,10 @@ const menuDataRender = menuList =>
 
 const footerRender = (_, defaultDom) => {
   if (!isAntDesignPro()) {
-    return defaultDom;
+    // return defaultDom;
+    return (
+      <Layout.Footer style={{ textAlign: 'center' }}>Copyright 2019 云小讴技术部出品</Layout.Footer>
+    );
   }
 
   return (

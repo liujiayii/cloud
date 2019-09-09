@@ -1,9 +1,10 @@
-import { DefaultFooter, getMenuData, getPageTitle } from '@ant-design/pro-layout';
+import { getMenuData, getPageTitle } from '@ant-design/pro-layout';
 import DocumentTitle from 'react-document-title';
 import Link from 'umi/link';
 import React from 'react';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
+import { Layout } from 'antd';
 import SelectLang from '@/components/SelectLang';
 import logo from '../assets/logo.svg';
 import styles from './UserLayout.less';
@@ -47,7 +48,9 @@ const UserLayout = props => {
           </div>
           {children}
         </div>
-        <DefaultFooter />
+        <Layout.Footer style={{ textAlign: 'center' }}>
+          Copyright 2019 云小讴技术部出品
+        </Layout.Footer>
       </div>
     </DocumentTitle>
   );

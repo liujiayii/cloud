@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Card,
-  Form,
-  Row,
-  Col,
-  Input,
-  Drawer,
-  Descriptions,
-  Spin,
-} from 'antd';
+import { Button, Card, Form, Row, Col, Input, Drawer, Descriptions, Spin } from 'antd';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import moment from 'moment';
@@ -73,11 +63,12 @@ class Introduce extends React.Component {
             修改
           </Button>
           <Spin spinning={loading}>
-            <Descriptions title="公司简介" layout="vertical">
-              <Descriptions.Item label="修改时间">
-                {moment(listData.time).format('YYYY/MM/DD HH:mm:ss')}
-              </Descriptions.Item>
+            <Descriptions title="公司简介" layout="vertical" column={2}>
               <Descriptions.Item label="公司简介">{listData.content}</Descriptions.Item>
+              <Descriptions.Item label="总裁寄语">{listData.wishes}</Descriptions.Item>
+              <Descriptions.Item label="修改时间">
+                {moment(listData.time).format('YYYY/MM/DD')}
+              </Descriptions.Item>
             </Descriptions>
           </Spin>
         </Card>
@@ -96,6 +87,13 @@ class Introduce extends React.Component {
                   {getFieldDecorator('content', {
                     rules: [{ required: true, message: '请输入公司简介' }],
                   })(<Input.TextArea placeholder="请输入公司简介" />)}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="总裁寄语">
+                  {getFieldDecorator('wishes', {
+                    rules: [{ required: true, message: '请输入总裁寄语' }],
+                  })(<Input.TextArea placeholder="请输入总裁寄语" />)}
                 </Form.Item>
               </Col>
             </Row>

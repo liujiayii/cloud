@@ -1,11 +1,11 @@
-import { message } from 'antd'
+import { message } from 'antd';
 import {
   fetchTable,
   handleUpdate,
   handleDelete,
   handleUpdateStatus,
   changeDisplayStatus,
-} from '@/services/come/beauty'
+} from '@/services/come/beauty';
 
 export default {
   namespace: 'beauty',
@@ -17,9 +17,9 @@ export default {
     drawerShow: false,
   },
   effects: {
-    * fetch ({ payload = { pageNum: 1, pageSize: 10 } }, { call, put }) {
-      yield put({ type: 'changeTableLoading', payload: true })
-      const response = yield call(fetchTable, { ...payload })
+    *fetch({ payload = { pageNum: 1, pageSize: 10 } }, { call, put }) {
+      yield put({ type: 'changeTableLoading', payload: true });
+      const response = yield call(fetchTable, { ...payload });
       if (response.code === 0) {
         yield put({
           type: 'changeTableData',
@@ -31,64 +31,64 @@ export default {
               total: response.total,
             },
           },
-        })
-        yield put({ type: 'changeTableLoading', payload: false })
+        });
+        yield put({ type: 'changeTableLoading', payload: false });
       }
     },
-    * showDrawerAction (_, { _, put }) {
-      yield put({ type: 'changeShowDrawerStatus' })
+    *showDrawerAction(_, { put }) {
+      yield put({ type: 'changeShowDrawerStatus' });
     },
-    * handleUpdate ({ payload, pagination }, { call, put }) {
-      const response = yield call(handleUpdate, payload)
+    *handleUpdate({ payload, pagination }, { call, put }) {
+      const response = yield call(handleUpdate, payload);
       if (response.code === 0) {
-        yield put({ type: 'changeShowDrawerStatus' })
-        message.success(response.msg)
+        yield put({ type: 'changeShowDrawerStatus' });
+        message.success(response.msg);
         yield put({
           type: 'fetch',
           payload: { pageSize: pagination.pageSize, pageNum: pagination.current },
-        })
+        });
       }
     },
-    * handleUpdateStatus ({ payload, pagination }, { call, put }) {
-      const response = yield call(handleUpdateStatus, payload)
+    *handleUpdateStatus({ payload, pagination }, { call, put }) {
+      const response = yield call(handleUpdateStatus, payload);
       if (response.code === 0) {
-        message.success(response.msg)
+        message.success(response.msg);
         yield put({
           type: 'fetch',
           payload: { pageSize: pagination.pageSize, pageNum: pagination.current },
-        })
+        });
       }
     },
-    * changeDisplayStatus ({ payload, pagination }, { call, put }) {
-      const response = yield call(changeDisplayStatus, payload)
+    *changeDisplayStatus({ payload, pagination }, { call, put }) {
+      const response = yield call(changeDisplayStatus, payload);
       if (response.code === 0) {
-        message.success(response.msg)
+        message.success(response.msg);
         yield put({
           type: 'fetch',
           payload: { pageSize: pagination.pageSize, pageNum: pagination.current },
-        })
+        });
       }
     },
-    * handleDelete ({ payload, pagination }, { call, put }) {
-      const response = yield call(handleDelete, payload)
+    *handleDelete({ payload, pagination }, { call, put }) {
+      const response = yield call(handleDelete, payload);
       if (response.code === 0) {
-        message.success(response.msg)
+        message.success(response.msg);
         yield put({
           type: 'fetch',
           payload: { pageSize: pagination.pageSize, pageNum: pagination.current },
-        })
+        });
       }
     },
   },
   reducers: {
-    changeTableData (state, { payload }) {
-      return { ...state, tableData: payload.tableData, pagination: payload.pagination }
+    changeTableData(state, { payload }) {
+      return { ...state, tableData: payload.tableData, pagination: payload.pagination };
     },
-    changeTableLoading (state, { payload }) {
-      return { ...state, loading: payload }
+    changeTableLoading(state, { payload }) {
+      return { ...state, loading: payload };
     },
-    changeShowDrawerStatus (state) {
-      return { ...state, drawerShow: !state.drawerShow }
+    changeShowDrawerStatus(state) {
+      return { ...state, drawerShow: !state.drawerShow };
     },
   },
-}
+};

@@ -1,7 +1,6 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-
-/* eslint-disable import/no-extraneous-dependencies */
+// eslint-disable-next-line eslint-comments/disable-enable-pair,import/no-extraneous-dependencies
 import client from 'webpack-theme-color-replacer/client';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import generate from '@ant-design/colors/lib/generate';
 
 export default {
