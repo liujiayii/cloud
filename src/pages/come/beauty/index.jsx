@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Button,
   Card,
@@ -11,66 +11,109 @@ import {
   Select,
   Modal,
   Typography,
-} from 'antd';
-import { connect } from 'dva';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import moment from 'moment';
+  Upload,
+  Icon,
+  message,
+} from 'antd'
+import { connect } from 'dva'
+import { PageHeaderWrapper } from '@ant-design/pro-layout'
+import moment from 'moment'
 
-const namespace = 'beauty';
+const namespace = 'beauty'
 const mapState = state => {
-  const { tableData, pagination, loading, search, drawerShow } = state[namespace];
-  return { tableData, pagination, loading, search, drawerShow };
-};
+  const { tableData, pagination, loading, search, drawerShow } = state[namespace]
+  return { tableData, pagination, loading, search, drawerShow }
+}
 const mapDispatch = dispatch => ({
   onDidMount: () => {
-    dispatch({ type: `${namespace}/fetch` });
+    dispatch({ type: `${namespace}/fetch` })
   },
   handleTableChange: (pagination, filters) => {
-    const payload = { pageNum: pagination.current, ...filters };
-    dispatch({ type: `${namespace}/fetch`, payload });
+    const payload = { pageNum: pagination.current, ...filters }
+    dispatch({ type: `${namespace}/fetch`, payload })
   },
   showDrawerAction: () => {
-    dispatch({ type: `${namespace}/showDrawerAction` });
+    dispatch({ type: `${namespace}/showDrawerAction` })
   },
-  handleEdit: (record, form) => {
-    dispatch({ type: `${namespace}/showDrawerAction` });
-    const payload = { ...record };
+  handleEdit: (record, that) => {
+    dispatch({ type: `${namespace}/showDrawerAction` })
+    const payload = { ...record }
     setTimeout(() => {
-      form.setFieldsValue(payload);
-    });
+      that.props.form.setFieldsValue(payload)
+      that.setState({ imageUrl: payload.picurl })
+    })
   },
   handleDelete: (record, pagination) => {
     Modal.confirm({
       title: '删除',
       content: '是否删除该风采？',
-      onOk() {
-        const payload = { id: record.id };
-        dispatch({ type: `${namespace}/handleDelete`, payload, pagination });
+      onOk () {
+        const payload = { id: record.id }
+        dispatch({ type: `${namespace}/handleDelete`, payload, pagination })
       },
-      onCancel() {},
-    });
+      onCancel () {},
+    })
   },
   handleSubmit: (e, form, pagination) => {
-    e.preventDefault();
+    e.preventDefault()
     form.validateFields((err, values) => {
       if (!err) {
         const payload = {
           ...values,
           id: values.id || '',
           time: moment().format('YYYY-MM-DD HH:mm:ss'),
-        };
-        dispatch({ type: `${namespace}/handleUpdate`, payload, pagination });
+        }
+        dispatch({ type: `${namespace}/handleUpdate`, payload, pagination })
       }
-    });
+    })
   },
-});
+})
+
+function getBase64 (img, callback) {
+  const reader = new FileReader()
+  reader.addEventListener('load', () => callback(reader.result))
+  reader.readAsDataURL(img)
+}
+
+function beforeUpload (file) {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+  if (!isJpgOrPng) {
+    message.error('你只能上传 JPG/PNG 文件!')
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2
+  if (!isLt2M) {
+    message.error('图片必须小于 2MB!')
+  }
+  return isJpgOrPng && isLt2M
+}
 
 class Beauty extends React.Component {
-  componentDidMount() {
-    this.props.onDidMount();
+  state = {
+    loading: false,
   }
 
-  render() {
+  componentDidMount () {
+    this.props.onDidMount()
+  }
+
+  handleChange = info => {
+    if (info.file.status === 'uploading') {
+      this.setState({ loading: true })
+      return
+    }
+    if (info.file.status === 'done') {
+      this.props.form.setFieldsValue({ picurl: info.file.response.data })
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, imageUrl =>
+        this.setState({
+          imageUrl,
+          loading: false,
+        }),
+      )
+    }
+  }
+
+  render () {
     const {
       tableData,
       pagination,
@@ -84,7 +127,14 @@ class Beauty extends React.Component {
       showDrawerAction,
       drawerShow,
       handleSubmit,
-    } = this.props;
+    } = this.props
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'}/>
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    )
+    const { imageUrl } = this.state
 
     return (
       <PageHeaderWrapper>
@@ -101,7 +151,7 @@ class Beauty extends React.Component {
             scroll={{ x: true }}
             onChange={page => handleTableChange(page, search)}
           >
-            <Table.Column title="编号ID" dataIndex="id" />
+            <Table.Column title="编号ID" dataIndex="id"/>
             <Table.Column
               title="内容"
               dataIndex="content"
@@ -119,7 +169,7 @@ class Beauty extends React.Component {
             <Table.Column
               title="图片"
               dataIndex="picurl"
-              render={text => <img src={text} width={100} alt="" />}
+              render={text => <img src={text} width={100} alt=""/>}
             />
             <Table.Column
               title="添加时间"
@@ -130,7 +180,7 @@ class Beauty extends React.Component {
               title="操作"
               render={(text, record) => (
                 <div>
-                  <Button type="primary" onClick={() => handleEdit(record, form)}>
+                  <Button type="primary" onClick={() => handleEdit(record, this)}>
                     查看
                   </Button>
                   <Button type="danger" onClick={() => handleDelete(record, pagination)}>
@@ -149,7 +199,7 @@ class Beauty extends React.Component {
           destroyOnClose
         >
           <Form layout="vertical" hideRequiredMark>
-            {getFieldDecorator('id')(<Input type="hidden" />)}
+            {getFieldDecorator('id')(<Input type="hidden"/>)}
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item label="类型">
@@ -167,16 +217,24 @@ class Beauty extends React.Component {
                 <Form.Item label="内容">
                   {getFieldDecorator('content', {
                     rules: [{ required: true, message: '请输入内容' }],
-                  })(<Input.TextArea placeholder="请输入内容" />)}
+                  })(<Input.TextArea placeholder="请输入内容"/>)}
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item label="图片">
-                  {getFieldDecorator('picurl', {
-                    rules: [{ required: true, message: '请输入图片' }],
-                  })(<Input placeholder="请输入图片" />)}
+                  {getFieldDecorator('picurl')(<Input type="hidden"/>)}
+                  <Upload
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    action="/news/uploadNewTrendImg"
+                    beforeUpload={beforeUpload}
+                    onChange={this.handleChange}
+                  >
+                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }}/> : uploadButton}
+                  </Upload>
                 </Form.Item>
               </Col>
             </Row>
@@ -191,11 +249,11 @@ class Beauty extends React.Component {
           </div>
         </Drawer>
       </PageHeaderWrapper>
-    );
+    )
   }
 }
 
 export default connect(
   mapState,
   mapDispatch,
-)(Form.create({ name: 'brand_form' })(Beauty));
+)(Form.create({ name: 'brand_form' })(Beauty))
