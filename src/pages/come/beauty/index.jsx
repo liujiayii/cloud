@@ -32,8 +32,11 @@ const mapDispatch = dispatch => ({
     const payload = { pageNum: pagination.current, ...filters }
     dispatch({ type: `${namespace}/fetch`, payload })
   },
-  showDrawerAction: () => {
+  showDrawerAction: that => {
     dispatch({ type: `${namespace}/showDrawerAction` })
+    if (that.state) {
+      that.setState({ imageUrl: '' })
+    }
   },
   handleEdit: (record, that) => {
     dispatch({ type: `${namespace}/showDrawerAction` })
@@ -194,7 +197,7 @@ class Beauty extends React.Component {
         <Drawer
           title="风采展示"
           width={720}
-          onClose={showDrawerAction}
+          onClose={() => showDrawerAction(this)}
           visible={drawerShow}
           destroyOnClose
         >
@@ -232,6 +235,7 @@ class Beauty extends React.Component {
                     action="/news/uploadNewTrendImg"
                     beforeUpload={beforeUpload}
                     onChange={this.handleChange}
+                    data={{ width: '500', height: '278' }}
                   >
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }}/> : uploadButton}
                   </Upload>

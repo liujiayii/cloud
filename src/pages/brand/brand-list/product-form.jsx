@@ -21,13 +21,17 @@ const mapDispatch = dispatch => ({
       }
     })
   },
-  showDrawerActionProduct: () => {
+  showDrawerActionProduct: that => {
     dispatch({ type: `${namespace}/showDrawerActionProduct` })
+    if (that.state) {
+      that.setState({ imageUrl: ''})
+    }
   },
   getBrandList: () => {
     dispatch({ type: `${namespace}/getBrandList` })
   },
 })
+
 function getBase64 (img, callback) {
   const reader = new FileReader()
   reader.addEventListener('load', () => callback(reader.result))
@@ -45,14 +49,17 @@ function beforeUpload (file) {
   }
   return isJpgOrPng && isLt2M
 }
+
 class ProductForm extends React.PureComponent {
   state = {
     loading: false,
   }
+
   componentDidMount () {
     this.props.getBrandList()
     this.props.onRef(this)
   }
+
   handleChange = info => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true })
@@ -91,7 +98,7 @@ class ProductForm extends React.PureComponent {
       <Drawer
         title="产品介绍"
         width={720}
-        onClose={showDrawerActionProduct}
+        onClose={() => showDrawerActionProduct(this)}
         visible={drawerShowProduct}
         destroyOnClose
       >
@@ -158,6 +165,7 @@ class ProductForm extends React.PureComponent {
                   action="/news/uploadNewTrendImg"
                   beforeUpload={beforeUpload}
                   onChange={this.handleChange}
+                  data={{ width: '500', height: '336' }}
                 >
                   {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }}/> : uploadButton}
                 </Upload>

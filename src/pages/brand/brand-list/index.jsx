@@ -21,8 +21,11 @@ const mapDispatch = dispatch => ({
     const payload = { pageNum: pagination.current, ...filters }
     dispatch({ type: `${namespace}/fetch`, payload })
   },
-  showDrawerAction: () => {
+  showDrawerAction: that => {
     dispatch({ type: `${namespace}/showDrawerAction` })
+    if (that.state) {
+      that.setState({ imageUrl: '', imageUrl2: '' })
+    }
   },
   handleEdit: (record, that) => {
     dispatch({ type: `${namespace}/showDrawerAction` })
@@ -134,7 +137,7 @@ class BrandList extends React.Component {
       return
     }
     if (info.file.status === 'done') {
-      this.props.form.setFieldsValue({ img: info.file.response.data })
+      this.props.form.setFieldsValue({ details_img: info.file.response.data })
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, imageUrl2 =>
         this.setState({
@@ -288,7 +291,7 @@ class BrandList extends React.Component {
         <Drawer
           title="品牌介绍"
           width={720}
-          onClose={showDrawerAction}
+          onClose={() => showDrawerAction(this)}
           visible={drawerShow}
           destroyOnClose
         >
@@ -366,6 +369,7 @@ class BrandList extends React.Component {
                     action="/news/uploadNewTrendImg"
                     beforeUpload={beforeUpload}
                     onChange={this.handleChange2}
+                    data={{ width: '500', height: '336' }}
                   >
                     {imageUrl2 ? <img src={imageUrl2} alt="avatar" style={{ width: '100%' }}/> : uploadButton2}
                   </Upload>
@@ -381,6 +385,7 @@ class BrandList extends React.Component {
                     action="/news/uploadNewTrendImg"
                     beforeUpload={beforeUpload}
                     onChange={this.handleChange}
+                    data={{ width: '600', height: '420' }}
                   >
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }}/> : uploadButton}
                   </Upload>
