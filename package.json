@@ -94,7 +94,7 @@
     "slash2": "^2.0.0",
     "stylelint": "^10.1.0",
     "umi-plugin-ga": "^1.1.5",
-    "umi-plugin-pro": "^1.0.2",
+    "umi-plugin-pro": "^2.0.1",
     "umi-types": "^0.4.0",
     "webpack-theme-color-replacer": "^1.2.17"
   },
