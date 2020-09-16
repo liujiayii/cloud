@@ -92,7 +92,7 @@
     "prettier": "^1.18.2",
     "pro-download": "1.0.1",
     "slash2": "^2.0.0",
-    "stylelint": "^10.1.0",
+    "stylelint": "^13.7.1",
     "umi-plugin-ga": "^1.1.5",
     "umi-plugin-pro": "^1.0.2",
     "umi-types": "^0.4.0",
